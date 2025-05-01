@@ -101,6 +101,8 @@ class Select extends With
 
                 if (is_int($key)) {
                     $columns .= "`{$this->alias}`.`{$column}`";
+                } elseif ($column instanceof RawSql) {
+                    $columns .= $column->toString($this->adapter);
                 } else {
                     $columns .= "`{$this->alias}`.`{$column}` as `{$key}`";
                 }
@@ -129,7 +131,7 @@ class Select extends With
         if (isset($this->order)) {
             foreach ($this->order as [$column, $direction]) {
                 $order .= $order ? ', ' : '';
-                $order .= "`{$this->alias}`.`{$column}` {$direction}";
+                $order .= strtolower($column) === 'rand()' ? $column : "`{$this->alias}`.`{$column}` {$direction}";
             }
 
             $order = PHP_EOL . "ORDER BY " . $order;
@@ -152,6 +154,14 @@ FROM `{$this->table}` `{$this->alias}`{$join}
 {$this->getCondition()}{$group}{$order}{$limit}
 SQL
         );
+    }
+
+    public function selectCount(): int
+    {
+        $query = explode('FROM', $this->getQuery());
+        $result = $this->adapter->query("SELECT COUNT(1) AS `count` FROM{$query[1]}", \stdClass::class);
+
+        return $result[0]->count;
     }
 
     public function getRows(): array

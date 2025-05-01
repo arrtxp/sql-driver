@@ -4,6 +4,7 @@ namespace TestsUnit\SqlDriver;
 
 use SqlDriver\JoinType;
 use SqlDriver\OrderDirection;
+use SqlDriver\RawSql;
 use SqlDriver\Select;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TestsUnit\Structures\User;
@@ -84,6 +85,29 @@ SELECT `u`.*
 FROM `users` `u`
 WHERE 1
 ORDER BY `u`.`id` ASC
+SQL,
+            ],
+            'orderRand' => [
+                static fn() => (new Select(self::getAdapter(), 'users', 'u', User::class))
+                    ->order('RAND()')
+                ,
+                <<<SQL
+SELECT `u`.*
+FROM `users` `u`
+WHERE 1
+ORDER BY RAND()
+SQL,
+            ],
+            'rawSql' => [
+                static fn() => (new Select(self::getAdapter(), 'users', 'u', User::class))
+                    ->where(new RawSql('id IN (?) AND name = ?', [[1,2], 'Jan']))
+                    ->limit(10, 2)
+                ,
+                <<<SQL
+SELECT `u`.*
+FROM `users` `u`
+WHERE id IN (1,2) AND name = 'Jan'
+LIMIT 10,10
 SQL,
             ],
             'join' => [

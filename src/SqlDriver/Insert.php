@@ -30,7 +30,7 @@ class Insert
         return $this;
     }
 
-    public function setDuplicateKeyUpdate(string|array $field, null|float|int|string $value = null): self
+    public function setDuplicateKeyUpdate(string|array $field, null|float|int|string|RawSql $value = null): self
     {
         if (is_array($field)) {
             foreach ($field as $k => $v) {
@@ -85,12 +85,15 @@ SQL;
         }
 
         $onDuplicateKeyUpdate = '';
+
         foreach ($this->onDuplicateKeyUpdate as $key => $value) {
             $onDuplicateKeyUpdate .= ($onDuplicateKeyUpdate != '') ? ', ' : '';
             if (is_numeric($key)) {
-                $onDuplicateKeyUpdate .= "`{$this->alias}`.`{$value}` = VALUES(`{$this->alias}`.`{$value}`)";
+                $onDuplicateKeyUpdate .= "`{$value}` = VALUES(`{$value}`)";
+            } elseif ($value instanceof RawSql) {
+                $onDuplicateKeyUpdate .= "`{$key}` = {$value->toString($this->adapter)}";
             } else {
-                $onDuplicateKeyUpdate .= "`{$this->alias}`.`{$key}` = {$this->adapter->filter($value)}";
+                $onDuplicateKeyUpdate .= "`{$key}` = {$this->adapter->filter($value)}";
             }
         }
 

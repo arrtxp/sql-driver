@@ -17,14 +17,14 @@ class Update extends With
         return $this;
     }
 
-    public function set(string|array $field, null|string|int|float|bool|array $value = null): self
+    public function set(string|array $field, null|string|int|float|bool|array|RawSql $value = null): self
     {
         if (is_array($field)) {
             foreach ($field as $k => $v) {
                 $this->set($k, $v);
             }
         } else {
-            $this->set[$field] = $this->adapter->filter($value);
+            $this->set[$field] = $value instanceof RawSql ? $value : $this->adapter->filter($value);
         }
 
         return $this;
@@ -32,12 +32,17 @@ class Update extends With
 
     public function getQuery(): string
     {
-        $set = [];
-        foreach ($this->set as $field => $value) {
-            $set[] = "`$this->alias`.`{$field}` = {$value}";
-        }
+        $set = "";
 
-        $set = implode(', ', $set);
+        foreach ($this->set as $field => $value) {
+            $set .= $set ? ", " : "";
+
+            if ($value instanceof RawSql) {
+                $set .= "`$this->alias`.`{$field}` = ({$value->toString($this->adapter)})";
+            } else {
+                $set .= "`$this->alias`.`{$field}` = {$value}";
+            }
+        }
 
         $join = "";
         if (isset($this->join)) {

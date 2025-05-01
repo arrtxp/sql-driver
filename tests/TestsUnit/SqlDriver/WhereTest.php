@@ -35,7 +35,7 @@ MYSQL,
             ],
             'defaultIn' => [
                 static fn() => (new Where(self::getAdapter(), 'users', 'u'))
-                    ->where('id', [1, 2,])
+                    ->where('id', [1, 2])
                 ,
                 <<<MYSQL
 WHERE `u`.`id` IN (1,2)

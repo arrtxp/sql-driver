@@ -71,8 +71,7 @@ abstract class Where
             }
 
             if ($field instanceof RawSql) {
-                $value = $field->value;
-                $field = $field->condition;
+                $field = $field->toString($this->adapter);
             } else {
                 $fields = str_word_count($field, 1, '_1234567890:');
                 $fields = array_filter($fields, $isSqlDictionary);
@@ -107,12 +106,16 @@ abstract class Where
             }
 
             $condition .= $field;
-            if (is_array($value) && substr_count($field, '?') > 1) {
-                foreach ($value as $v) {
-                    $values[] = $this->adapter->filter($v);
+            $count = substr_count($field, '?');
+            
+            if ($count) {
+                if (is_array($value) && $count > 1) {
+                    foreach ($value as $v) {
+                        $values[] = $this->adapter->filter($v);
+                    }
+                } else {
+                    $values[] = $this->adapter->filter($value);
                 }
-            } else {
-                $values[] = $this->adapter->filter($value);
             }
         }
 

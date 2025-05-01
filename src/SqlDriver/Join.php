@@ -27,6 +27,8 @@ class Join extends Where
 
             if (is_int($key)) {
                 $columns .= "`{$this->alias}`.`{$column}`";
+            } elseif ($column instanceof RawSql) {
+                $columns .= "({$column->toString($this->adapter)}) as `{$key}`";
             } else {
                 $columns .= "`{$this->alias}`.`{$column}` as `{$key}`";
             }

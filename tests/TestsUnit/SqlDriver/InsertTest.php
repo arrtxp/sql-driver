@@ -105,7 +105,7 @@ SQL,
                 <<<SQL
 INSERT INTO `users` (`id`,`name`,`surname`)
 VALUES (1,'Jan','Kowalski'),(2,'Karol','Major')
-ON DUPLICATE KEY UPDATE `u`.`id` = VALUES(`u`.`id`), `u`.`name` = VALUES(`u`.`name`), `u`.`surname` = 'Aaaa', `u`.`age` = 12
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `surname` = 'Aaaa', `age` = 12
 SQL,
             ],
         ];
