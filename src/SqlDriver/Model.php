@@ -2,9 +2,6 @@
 
 namespace SqlDriver;
 
-use Attribute;
-
-#[Attribute]
 abstract class Model
 {
     public string $table;
