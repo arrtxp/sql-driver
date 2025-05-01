@@ -1,4 +1,16 @@
 {
+  "name": "arrtxp/sql-driver",
+  "type": "library",
+  "description": "SQL Driver for PDO",
+  "license": "MIT",
+  "keywords": ["SQL Driver for PDO"],
+  "homepage": "https://github.com/arrtxp/sql-driver",
+  "authors": [
+    {
+      "name": "Tomasz Dudzinski",
+      "email": "arrtxp@gmail.com"
+    }
+  ],
   "require": {
     "php": "~8.3.0 || ~8.4"
   },
