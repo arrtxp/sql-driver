@@ -1,12 +1,13 @@
-#Requirements
+# Requirements
 - PHP 8.3
 - MySql
 - PDO
 
-#Composer
-composer require arrtxp/sql-driver
+# Composer
 
-#Usage
+`composer require arrtxp/sql-driver`
+
+# Usage
 ```php
 <?php
 
