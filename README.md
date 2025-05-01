@@ -34,7 +34,7 @@ class User {
   public string $name;
 }
 
-class Users extends SqlDriver\Model {
+class Users extends Model {
   public string $table = 'users';
   public string $structure = User::class;
 }
