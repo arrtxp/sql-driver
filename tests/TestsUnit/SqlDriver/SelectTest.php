@@ -84,7 +84,6 @@ SELECT `u`.*
 FROM `users` `u`
 WHERE 1
 ORDER BY `u`.`id` ASC
-LIMIT 10,10
 SQL,
             ],
             'join' => [
