@@ -3,6 +3,9 @@
 - MySql
 - PDO
 
+#Composer
+composer require arrtxp/sql-driver
+
 #Usage
 ```php
 <?php
