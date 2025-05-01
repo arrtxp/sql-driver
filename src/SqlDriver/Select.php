@@ -14,6 +14,7 @@ class Select extends With
     private array $columns;
     private array $join;
     private array $group;
+    private array $order;
 
     public int $limit;
     public int $page;
@@ -56,6 +57,13 @@ class Select extends With
         if ($page) {
             $this->page = $page;
         }
+
+        return $this;
+    }
+
+    public function order(string $column, OrderDirection $direction = OrderDirection::ASC): self
+    {
+        $this->order[] = [$column, $direction->value];
 
         return $this;
     }
@@ -117,6 +125,16 @@ class Select extends With
             $limit .= PHP_EOL . "LIMIT {$this->limit}";
         }
 
+        $order = "";
+        if (isset($this->order)) {
+            foreach ($this->order as [$column, $direction]) {
+                $order .= $order ? ', ' : '';
+                $order .= "`{$this->alias}`.`{$column}` {$direction}";
+            }
+
+            $order = PHP_EOL . "ORDER BY " . $order;
+        }
+
         $group = "";
         if (isset($this->group)) {
             foreach ($this->group as $column) {
@@ -131,7 +149,7 @@ class Select extends With
             <<<SQL
 {$this->getWith()}SELECT{$distinct} {$columns}{$joinColumns}
 FROM `{$this->table}` `{$this->alias}`{$join}
-{$this->getCondition()}{$limit}{$group}
+{$this->getCondition()}{$group}{$order}{$limit}
 SQL
         );
     }

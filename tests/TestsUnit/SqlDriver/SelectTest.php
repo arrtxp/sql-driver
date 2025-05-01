@@ -3,6 +3,7 @@
 namespace TestsUnit\SqlDriver;
 
 use SqlDriver\JoinType;
+use SqlDriver\OrderDirection;
 use SqlDriver\Select;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TestsUnit\Structures\User;
@@ -71,6 +72,18 @@ SQL,
 SELECT `u`.*
 FROM `users` `u`
 WHERE 1
+LIMIT 10,10
+SQL,
+            ],
+            'order' => [
+                static fn() => (new Select(self::getAdapter(), 'users', 'u', User::class))
+                    ->order('id', OrderDirection::ASC)
+                ,
+                <<<SQL
+SELECT `u`.*
+FROM `users` `u`
+WHERE 1
+ORDER BY `u`.`id` ASC
 LIMIT 10,10
 SQL,
             ],
