@@ -40,7 +40,6 @@ class User {
 
 class Users extends Model {
   public string $table = 'users';
-  public string $structure = User::class;
 }
 
 $modelUser = new Users($adapter);
@@ -61,13 +60,13 @@ $userId = $modelUser
 $user = $modelUser
   ->select()
   ->where('id', $userId)
-  ->getRow();
+  ->getRow(User::class);
 
 // get rows
 // SELECT `u`.* FROM `users` `u` WHERE 1
 $users = $modelUser
   ->select()
-  ->getRows();
+  ->getRows(User::class);
 
 // update row
 // UPDATE `users` `u` SET `u`.`name` = 'Jan' WHERE `u`.`id` = 1
