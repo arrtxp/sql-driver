@@ -41,8 +41,7 @@ SQL,
                 static fn() => (new Delete(self::getAdapter(), 'users', 'u'))
                     ->join(
                         (new Users(self::getAdapter()))
-                            ->alias('u2')
-                            ->join()
+                            ->join('u2')
                             ->type(JoinType::LEFT)
                             ->where(new RawSql('`u2`.`id` = `u`.`id`'))
                     )

@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TestsUnit\Base;
 use TestsUnit\Models\Users;
+use TestsUnit\Structures\User;
 
 #[CoversClass(With::class)]
 class ModelTest extends Base
@@ -51,7 +52,7 @@ SQL,
                 static fn() => static::$users
                     ->select()
                     ->where('id', 1)
-                    ->getRow()
+                    ->getRow(User::class)
                 ,
                 <<<SQL
 SELECT `u`.*

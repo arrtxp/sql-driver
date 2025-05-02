@@ -116,8 +116,7 @@ SQL,
                     ->columns(['id', 'name'])
                     ->join(
                         (new Users(self::getAdapter()))
-                            ->alias('u2')
-                            ->join()
+                            ->join('u2')
                             ->type(JoinType::LEFT)
                             ->where('id', 1)
                             ->columns(['id', 'name'])

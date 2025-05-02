@@ -61,12 +61,17 @@ class Adapter
         return $result;
     }
 
-    public function query(string $query, string $fetchClass): array
+    /**
+     * @template T
+     * @param class-string<T> $structure
+     * @return T[]
+     */
+    public function query(string $query, string $structure = \stdClass::class): array
     {
         $this->lastQuery = $query;
 
         $this->startMicroTime();
-        $result = $this->pdo()->query($query)->fetchAll(\PDO::FETCH_CLASS, $fetchClass);
+        $result = $this->pdo()->query($query)->fetchAll(\PDO::FETCH_CLASS, $structure);
         $this->startMicroTime();
 
         return $result;

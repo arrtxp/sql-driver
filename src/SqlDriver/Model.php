@@ -5,7 +5,6 @@ namespace SqlDriver;
 abstract class Model
 {
     public string $table;
-    public string $structure;
     public string $alias;
 
     public function __construct(
@@ -21,63 +20,48 @@ abstract class Model
         }
     }
 
-    public function structure(string $name): self
-    {
-        $this->structure = $name;
-
-        return $this;
-    }
-
-    public function alias(string $alias): self
-    {
-        $this->alias = $alias;
-
-        return $this;
-    }
-
-    public function update(): Update
+    public function update(?string $alias = null): Update
     {
         return new Update(
             adapter: $this->adapter,
             table: $this->table,
-            alias: $this->alias
+            alias: $alias ?? $this->alias
         );
     }
 
-    public function delete(): Delete
+    public function delete(?string $alias = null): Delete
     {
         return new Delete(
             adapter: $this->adapter,
             table: $this->table,
-            alias: $this->alias
+            alias: $alias ?? $this->alias
         );
     }
 
-    public function insert(): Insert
+    public function insert(?string $alias = null): Insert
     {
         return new Insert(
             adapter: $this->adapter,
             table: $this->table,
-            alias: $this->alias
+            alias: $alias ?? $this->alias
         );
     }
 
-    public function select(): Select
+    public function select(?string $alias = null): Select
     {
         return new Select(
             adapter: $this->adapter,
             table: $this->table,
-            alias: $this->alias,
-            structure: $this->structure
+            alias: $alias ?? $this->alias,
         );
     }
 
-    public function join(): Join
+    public function join(?string $alias): Join
     {
         return new Join(
             adapter: $this->adapter,
             table: $this->table,
-            alias: $this->alias,
+            alias: $alias ?? $this->alias,
         );
     }
 

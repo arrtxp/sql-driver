@@ -19,16 +19,6 @@ class Select extends With
     public int $limit;
     public int $page;
 
-    public function __construct(
-        Adapter $adapter,
-        string $table,
-        string $alias,
-
-        private readonly string $structure,
-    ) {
-        parent::__construct($adapter, $table, $alias);
-    }
-
     public function columns(array $columns): self
     {
         $this->columns = $columns;
@@ -156,17 +146,25 @@ SQL
         );
     }
 
-    public function selectCount(): int
+    public function selectCount(?string $column = null): int
     {
+        $distinct = $this->distinct ? 'DISTINCT ' : '';
+        $column = $column ? "`{$column}`" : 1;
+
         $query = explode('FROM', $this->getQuery());
-        $result = $this->adapter->query("SELECT COUNT(1) AS `count` FROM{$query[1]}", \stdClass::class);
+        $result = $this->adapter->query("SELECT COUNT({$distinct}{$column}) AS `count` FROM{$query[1]}", \stdClass::class);
 
         return $result[0]->count;
     }
 
-    public function getRows(): array
+    /**
+     * @template T
+     * @param class-string<T> $structure
+     * @return T|false
+     */
+    public function getRows(string $structure = \stdClass::class): array
     {
-        $result = $this->adapter->query($this->getQuery(), $this->structure);
+        $result = $this->adapter->query($this->getQuery(), $structure);
 
         if ($result && method_exists($result[0], 'prepareData')) {
             foreach ($result as $row) {
@@ -181,8 +179,13 @@ SQL
         return $result;
     }
 
-    public function getRow(): false|object
+    /**
+     * @template T
+     * @param class-string<T> $structure
+     * @return T|false
+     */
+    public function getRow(string $structure = \stdClass::class): false|object
     {
-        return current($this->getRows());
+        return current($this->getRows($structure));
     }
 }
