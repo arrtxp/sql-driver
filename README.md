@@ -1,8 +1,3 @@
-# Requirements
-- PHP 8.3
-- MySql
-- PDO
-
 # Composer
 
 `composer require arrtxp/sql-driver`
@@ -84,3 +79,8 @@ $modelUser
   ->execute();
 
 ````
+
+# Requirements
+- PHP 8.3
+- MySql
+- PDO

@@ -7,6 +7,7 @@ use SqlDriver\OrderDirection;
 use SqlDriver\RawSql;
 use SqlDriver\Select;
 use PHPUnit\Framework\Attributes\DataProvider;
+use TestsUnit\Models\Roles;
 use TestsUnit\Structures\User;
 use TestsUnit\Models\Users;
 use TestsUnit\Base;
@@ -54,15 +55,19 @@ SQL,
             ],
             'group' => [
                 static fn() => (new Select(self::getAdapter(), 'users', 'u', User::class))
-                    ->where('id', 2)
+                    ->columns(
+                        [
+                            'id',
+                            'amount' => new RawSql('SUM(`u`.`amount`)'),
+                        ]
+                    )
                     ->group('id')
-                    ->group('name')
                 ,
                 <<<SQL
-SELECT `u`.*
+SELECT `u`.`id`, SUM(`u`.`amount`) as `amount`
 FROM `users` `u`
-WHERE `u`.`id` = 2
-GROUP BY `u`.`id`, `u`.`name`
+WHERE 1
+GROUP BY `u`.`id`
 SQL,
             ],
             'limit' => [
@@ -100,7 +105,7 @@ SQL,
             ],
             'rawSql' => [
                 static fn() => (new Select(self::getAdapter(), 'users', 'u', User::class))
-                    ->where(new RawSql('id IN (?) AND name = ?', [[1,2], 'Jan']))
+                    ->where(new RawSql('id IN (?) AND name = ?', [[1, 2], 'Jan']))
                     ->limit(10, 2)
                 ,
                 <<<SQL
@@ -115,19 +120,18 @@ SQL,
                     ->distinct(true)
                     ->columns(['id', 'name'])
                     ->join(
-                        (new Users(self::getAdapter()))
-                            ->join('u2')
-                            ->type(JoinType::LEFT)
-                            ->where('id', 1)
-                            ->columns(['id', 'name'])
+                        (new Roles(self::getAdapter()))
+                            ->join('r')
+                            ->where(new RawSql("`u`.`id` = `r`.`id`"))
+                            ->columns(['role'])
                     )
                     ->limit(10)
                 ,
                 <<<SQL
-SELECT DISTINCT `u`.`id`, `u`.`name`, `u2`.`id`, `u2`.`name`
+SELECT DISTINCT `u`.`id`, `u`.`name`, `r`.`role`
 FROM `users` `u`
-LEFT JOIN `users` `u2`
-ON `u2`.`id` = 1
+INNER JOIN `roles` `r`
+ON `u`.`id` = `r`.`id`
 WHERE 1
 LIMIT 10
 SQL,

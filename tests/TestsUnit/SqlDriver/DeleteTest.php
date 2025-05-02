@@ -37,6 +37,17 @@ DELETE `u` FROM `users` `u`
 WHERE `u`.`id` = 2
 SQL,
             ],
+            'deleteLimit' => [
+                static fn() => (new Delete(self::getAdapter(), 'users', 'u'))
+                    ->where('id != ?', 2)
+                    ->limit(50)
+                ,
+                <<<SQL
+DELETE `u` FROM `users` `u`
+WHERE `u`.`id` != 2
+LIMIT 50
+SQL,
+            ],
             'deleteJoin' => [
                 static fn() => (new Delete(self::getAdapter(), 'users', 'u'))
                     ->join(

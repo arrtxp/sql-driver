@@ -11,6 +11,5 @@ class User
 
     protected function prepareData(): void
     {
-        var_dump(2);
     }
 }

@@ -8,10 +8,18 @@ namespace SqlDriver;
 class Delete extends With
 {
     private array $join;
+    private int $limit;
 
     public function join(Join $join): self
     {
         $this->join[] = $join;
+
+        return $this;
+    }
+
+    public function limit(int $limit): self
+    {
+        $this->limit = $limit;
 
         return $this;
     }
@@ -25,9 +33,14 @@ class Delete extends With
             }
         }
 
+        $limit = "";
+        if (isset($this->limit)) {
+            $limit = PHP_EOL . "LIMIT {$this->limit}";
+        }
+
         return <<<SQL
 DELETE `$this->alias` FROM `{$this->table}` `{$this->alias}`{$join}
-{$this->getCondition()}
+{$this->getCondition()}{$limit}
 SQL;
     }
 

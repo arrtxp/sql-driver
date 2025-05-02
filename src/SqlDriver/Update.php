@@ -9,10 +9,18 @@ class Update extends With
 {
     private array $set;
     private array $join;
+    private int $limit;
 
     public function join(Join $join): self
     {
         $this->join[] = $join;
+
+        return $this;
+    }
+
+    public function limit(int $limit): self
+    {
+        $this->limit = $limit;
 
         return $this;
     }
@@ -51,10 +59,15 @@ class Update extends With
             }
         }
 
+        $limit = "";
+        if (isset($this->limit)) {
+            $limit = PHP_EOL . "LIMIT {$this->limit}";
+        }
+
         return <<<SQL
 UPDATE `{$this->table}` `{$this->alias}`{$join}
 SET {$set}
-{$this->getCondition()}
+{$this->getCondition()}{$limit}
 SQL;
     }
 

@@ -92,7 +92,7 @@ class Select extends With
                 if (is_int($key)) {
                     $columns .= "`{$this->alias}`.`{$column}`";
                 } elseif ($column instanceof RawSql) {
-                    $columns .= $column->toString($this->adapter);
+                    $columns .= $column->toString($this->adapter) . " as `{$key}`";
                 } else {
                     $columns .= "`{$this->alias}`.`{$column}` as `{$key}`";
                 }
@@ -152,7 +152,10 @@ SQL
         $column = $column ? "`{$column}`" : 1;
 
         $query = explode('FROM', $this->getQuery());
-        $result = $this->adapter->query("SELECT COUNT({$distinct}{$column}) AS `count` FROM{$query[1]}", \stdClass::class);
+        $result = $this->adapter->query(
+            "SELECT COUNT({$distinct}{$column}) AS `count` FROM{$query[1]}",
+            \stdClass::class
+        );
 
         return $result[0]->count;
     }
@@ -160,7 +163,7 @@ SQL
     /**
      * @template T
      * @param class-string<T> $structure
-     * @return T|false
+     * @return T[]
      */
     public function getRows(string $structure = \stdClass::class): array
     {
@@ -184,7 +187,7 @@ SQL
      * @param class-string<T> $structure
      * @return T|false
      */
-    public function getRow(string $structure = \stdClass::class): false|object
+    public function getRow(string $structure = \stdClass::class)
     {
         return current($this->getRows($structure));
     }

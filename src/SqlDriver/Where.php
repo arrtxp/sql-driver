@@ -80,7 +80,7 @@ abstract class Where
 
                 foreach ($fields as $_field) {
                     if (isset($this->parameters[$_field])) {
-                        $replaceParams[$_field] = $this->parameters[$_field];
+                        $replaceParams["$_field "] = $this->parameters[$_field];
 
                         continue;
                     }
@@ -99,7 +99,7 @@ abstract class Where
                 }
 
                 if ($replaceParams) {
-                    $field = str_replace(array_keys($replaceParams), array_values($replaceParams), $field);
+                    $field = str_replace(array_keys($replaceParams), array_values($replaceParams), "{$field} ");
                 }
 
                 $field = str_replace(array_keys($replace), array_values($replace), $field);
