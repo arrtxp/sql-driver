@@ -44,7 +44,7 @@ class Adapter
                 $v = $this->filter($v);
             }
 
-            return '(' . implode(',', $value) . ')';
+            return implode(',', $value);
         }
 
         return $this->pdo()->quote($value);

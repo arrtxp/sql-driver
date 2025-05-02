@@ -91,7 +91,7 @@ abstract class Where
                         if ($value === null) {
                             $replace[$_field] .= ' IS ?';
                         } elseif (is_array($value)) {
-                            $replace[$_field] .= ' IN ?';
+                            $replace[$_field] .= ' IN (?)';
                         } else {
                             $replace[$_field] .= ' = ?';
                         }
@@ -107,7 +107,7 @@ abstract class Where
 
             $condition .= $field;
             $count = substr_count($field, '?');
-            
+
             if ($count) {
                 if (is_array($value) && $count > 1) {
                     foreach ($value as $v) {
@@ -120,7 +120,7 @@ abstract class Where
         }
 
         try {
-            return "WHERE " . vsprintf(str_replace(['(?)', '?'], "%s", $condition), $values);
+            return "WHERE " . vsprintf(str_replace("?", "%s", $condition), $values);
         } catch (\Throwable $e) {
             if (stripos($e->getMessage(), 'The arguments array must contain') !== false) {
                 throw new \Exception("Parameters are missing for '{$condition}'", $e->getCode(), $e);

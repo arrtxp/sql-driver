@@ -27,6 +27,6 @@ class RawSql
             $values[] = $adapter->filter($this->value);
         }
 
-        return vsprintf(str_replace(['(?)', '?'], "%s", $this->condition), $values);
+        return vsprintf(str_replace('?', "%s", $this->condition), $values);
     }
 }
