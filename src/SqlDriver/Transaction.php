@@ -2,8 +2,6 @@
 
 namespace SqlDriver;
 
-use SqlDriver\Adapter;
-
 final class Transaction
 {
     protected bool $transaction = false;
