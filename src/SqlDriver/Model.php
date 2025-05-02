@@ -56,7 +56,7 @@ abstract class Model
         );
     }
 
-    public function join(?string $alias): Join
+    public function join(?string $alias = null): Join
     {
         return new Join(
             adapter: $this->adapter,
