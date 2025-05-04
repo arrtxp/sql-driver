@@ -25,7 +25,9 @@ class Join extends Where
         foreach ($this->columns as $key => $column) {
             $columns .= ", ";
 
-            if (is_int($key)) {
+            if ($column === '*') {
+                $columns .= "`{$this->alias}`.*";
+            } elseif (is_int($key)) {
                 $columns .= "`{$this->alias}`.`{$column}`";
             } elseif ($column instanceof RawSql) {
                 $columns .= "({$column->toString($this->adapter)}) as `{$key}`";
