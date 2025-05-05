@@ -66,13 +66,19 @@ $userId = $modelUser
 $user = $modelUser
   ->select()
   ->where('id', $userId)
-  ->getRow(User::class);
+  ->getRow(User::class); 
+
+// $user is instanceof User
 
 // get rows
 // SELECT `u`.* FROM `users` `u` WHERE 1
 $users = $modelUser
   ->select()
   ->getRows(User::class);
+
+foreach ($users as $user) {
+  // $user is instanceof User
+}
 
 // update row
 // UPDATE `users` `u` SET `u`.`name` = 'Jan' WHERE `u`.`id` = 1
