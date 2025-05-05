@@ -30,7 +30,7 @@ class Insert
         return $this;
     }
 
-    public function setDuplicateKeyUpdate(string|array $field, null|float|int|string|RawSql $value = null): self
+    public function setDuplicateKeyUpdate(string|array $field, null|float|int|string|false|RawSql $value = null): self
     {
         if (is_array($field)) {
             foreach ($field as $k => $v) {

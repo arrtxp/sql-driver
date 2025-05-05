@@ -2,7 +2,7 @@
 
 namespace SqlDriver;
 
-class RawSql
+readonly class RawSql
 {
     public function __construct(
         public string $condition,
