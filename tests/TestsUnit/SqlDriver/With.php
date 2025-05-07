@@ -2,7 +2,7 @@
 
 namespace TestsUnit\SqlDriver;
 
-class With extends \SqlDriver\With
+class With extends \Arrtxp\SqlDriver\With
 {
 
 }

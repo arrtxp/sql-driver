@@ -2,7 +2,7 @@
 
 namespace TestsUnit\SqlDriver;
 
-use SqlDriver\Insert;
+use Arrtxp\SqlDriver\Insert;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TestsUnit\Base;
 

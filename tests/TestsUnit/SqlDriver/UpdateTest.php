@@ -2,9 +2,9 @@
 
 namespace TestsUnit\Core;
 
-use SqlDriver\JoinType;
-use SqlDriver\RawSql;
-use SqlDriver\Update;
+use Arrtxp\SqlDriver\JoinType;
+use Arrtxp\SqlDriver\RawSql;
+use Arrtxp\SqlDriver\Update;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TestsUnit\Models\Users;

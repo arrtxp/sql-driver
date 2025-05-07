@@ -2,7 +2,7 @@
 
 namespace TestsUnit\Models;
 
-use SqlDriver\Model;
+use Arrtxp\SqlDriver\Model;
 
 class Users extends Model
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace SqlDriver;
+namespace Arrtxp\SqlDriver;
 
 enum OrderDirection: string
 {

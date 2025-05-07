@@ -2,7 +2,7 @@
 
 namespace TestsUnit;
 
-use SqlDriver\Adapter;
+use Arrtxp\SqlDriver\Adapter;
 use PHPUnit\Framework\TestCase;
 
 abstract class Base extends TestCase

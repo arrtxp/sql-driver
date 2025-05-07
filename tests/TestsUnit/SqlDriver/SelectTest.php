@@ -2,10 +2,10 @@
 
 namespace TestsUnit\SqlDriver;
 
-use SqlDriver\JoinType;
-use SqlDriver\OrderDirection;
-use SqlDriver\RawSql;
-use SqlDriver\Select;
+use Arrtxp\SqlDriver\JoinType;
+use Arrtxp\SqlDriver\OrderDirection;
+use Arrtxp\SqlDriver\RawSql;
+use Arrtxp\SqlDriver\Select;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TestsUnit\Models\Roles;
 use TestsUnit\Structures\User;

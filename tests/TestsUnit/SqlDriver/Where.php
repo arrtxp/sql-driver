@@ -2,7 +2,7 @@
 
 namespace TestsUnit\SqlDriver;
 
-class Where extends \SqlDriver\Where
+class Where extends \Arrtxp\SqlDriver\Where
 {
 
 }

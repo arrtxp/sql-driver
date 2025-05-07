@@ -2,9 +2,9 @@
 
 namespace TestsUnit\SqlDriver;
 
-use SqlDriver\Delete;
-use SqlDriver\JoinType;
-use SqlDriver\RawSql;
+use Arrtxp\SqlDriver\Delete;
+use Arrtxp\SqlDriver\JoinType;
+use Arrtxp\SqlDriver\RawSql;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TestsUnit\Base;
 use TestsUnit\Models\Users;

@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SqlDriver\\": "src/SqlDriver/"
+      "Arrtxp\\SqlDriver\\": "src/SqlDriver/"
     }
   },
   "autoload-dev": {

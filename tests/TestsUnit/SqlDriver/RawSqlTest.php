@@ -2,7 +2,7 @@
 
 namespace TestsUnit\SqlDriver;
 
-use SqlDriver\RawSql;
+use Arrtxp\SqlDriver\RawSql;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TestsUnit\Base;
 
