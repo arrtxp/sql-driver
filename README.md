@@ -17,8 +17,8 @@
 ```php
 <?php
 
-use SqlDriver\Adapter;
-use SqlDriver\Model;
+use Arrtxp\SqlDriver\Adapter;
+use Arrtxp\SqlDriver\Model;
 
 $configDatabase = [
   'driver' => 'Pdo',
