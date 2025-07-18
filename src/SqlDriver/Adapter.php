@@ -79,17 +79,17 @@ class Adapter
 
     private function startMicroTime(): void
     {
-        $this->microtime['start'] = hrtime(true);
+        $this->microTime['start'] = hrtime(true);
     }
 
     private function stopMicroTime(): void
     {
-        $this->microtime['end'] = hrtime(true);
+        $this->microTime['end'] = hrtime(true);
     }
 
     public function getTimeExecute(): float
     {
-        return ($this->microtime['end'] - $this->microtime['start']) / 1e+6;
+        return ($this->microTime['end'] - $this->microTime['start']) / 1e+6;
     }
 
     public function getLastQuery(): ?string
